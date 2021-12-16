@@ -1,20 +1,54 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Hello ContactController!{% endblock %}
 
 {% block body %}
+
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if article is defined and article is not null %}
+    <h1>Mon article actuel</h1>
+<ul>
+    <li>Id: {{article.id}}</li>
+    <li>Nom: {{article.nom}}</li>
+    <li>Slug: {{article.slug}}</li>
+    <li>Contenu: {{article.contenu}}</li>
+</ul>
+    {% endif %}
+   Holla there!!!!!!
+    <nav>
+        <ul>
 
-    This friendly message is coming from:
+            <li><a href="/">Accueil</a></li>
+            <li><a href="{{ path('contact')}}">Contact</a></li>
+
+            <ul>
+            <li><a href="{{ path('contactCity',{city : 'montpellier'})}}">contacter montpellier</a></li>
+            <li><a href="{{ path('contact', {name : "alex"})}}">Contacter de la part d'alex</a></li>
+            <li><a href="{{ path('contactCity',{city : 'montpellier', name:"alex"})}}">contacter montpellier de la part d'alex</a></li>
+            </ul>
+            </li>
+        </ul>
+    </nav>
+    <h2>Mes articles</h2>
+
     <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/blog/src/Controller/ContactController.php'|file_link(0) }}">src/Controller/ContactController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/blog/templates/contact/index.html.twig'|file_link(0) }}">templates/contact/index.html.twig</a></code></li>
+        {% if articles is defined %}
+        {% for article in articles %}
+
+            <li>
+                <a href="{{ path('articleId', {'id': article.id}) }}">
+                                Mes articles {{ article.nom }}
+                </a>
+            </li>
+        {% endfor %}
+        {% endif %}
+        <a href="{{ path('articlecreate') }}">Créer un article</a>
     </ul>
 </div>
 {% endblock %}
